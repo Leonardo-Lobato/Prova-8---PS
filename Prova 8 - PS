@@ -1,0 +1,93 @@
+def main():
+    produtos = []
+    total_Produtos = 0.0
+
+    def calcular_total_geral():
+        return sum(produto['total'] for produto in produtos)
+
+    def adicionar_produto():
+        nonlocal total_Produtos
+        nome = input("Informe o nome do produto: ").strip()
+        quantidade = int(input("Informe a quantidade: "))
+        valor_unitario = float(input("Informe o valor unitário: "))
+        total = quantidade * valor_unitario
+        produtos.append({
+            "produto": nome,
+            "valor": valor_unitario,
+            "quantidade": quantidade,
+            "total": total
+        })
+        total_Produtos = calcular_total_geral()
+        print(f"Produto '{nome}' adicionado com sucesso! Total: R${total:.2f}")
+
+    def visualizar_lista():
+        if not produtos:
+            print("Lista de produtos vazia.")
+            return
+        print("\nLista de Produtos:")
+        for produto in produtos:
+            print(f"- {produto['produto']}: Quantidade: {produto['quantidade']}, Valor Unitário: R${produto['valor']:.2f}, Total: R${produto['total']:.2f}")
+        print(f"Valor de todos os produtos: R${totalProdutos:.2f}\n")
+
+    def atualizar_produto():
+        nonlocal total_Produtos
+        nome = input("Informe o nome do produto a ser atualizado-> ").strip()
+        for produto in produtos:
+            if produto['produto'].lower() == nome.lower():
+                novo_nome = input(f"Informe o novo nome do produto (ou pressione Enter para manter '{produto['produto']}') -> ").strip()
+                if novo_nome:
+                    produto['produto'] = novo_nome
+                produto['quantidade'] = int(input(f"Informe a nova quantidade (atual: {produto['quantidade']}) -> "))
+                produto['valor'] = float(input(f"Informe o novo valor unitário (atual: R${produto['valor']:.2f}) -> "))
+                produto['total'] = produto['quantidade'] * produto['valor']
+                total_Produtos = calcular_total_geral()
+                print(f"Produto '{produto['produto']}' atualizado.")
+                return
+        print(f"Produto '{nome}' não encontrado.")
+
+    def remover_produto():
+        nonlocal total_Produtos
+        nome = input("Informe o nome do produto a ser removido -> ").strip()
+        for produto in produtos:
+            if produto['produto'].lower() == nome.lower():
+                produtos.remove(produto)
+                total_Produtos = calcular_total_geral()
+                print(f"Produto '{nome}' removido.")
+                return
+        print(f"O produto '{nome}' não foi encontrado.")
+
+    while True:
+        print("\nDigite o número da opção desejada:")
+        print("1. Adicionar produto")
+        print("2. Visualizar lista de produtos")
+        print("3. Atualizar produto")
+        print("4. Remover produto")
+        print("5. Encerrar programa")
+        opcao = input("Escolha uma opção -> ")
+
+        if opcao == '1':
+            adicionar_produto()
+        elif opcao == '2':
+            visualizar_lista()
+        elif opcao == '3':
+            atualizar_produto()
+        elif opcao == '4':
+            remover_produto()
+        elif opcao == '5':
+            print("Encerrando o programa. Até logo!")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+
+
+
